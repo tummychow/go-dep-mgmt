@@ -20,17 +20,32 @@ One pecularity of godep that I can think of, looking at this documentation, is t
 
 ## [gom](https://github.com/mattn/gom)
 
-Made by mattn, a prolific gopher as far as GitHub is concerned. It's styled after bundler in a lot of respects. The "Gomfile" has an odd, ruby-esque syntax, familiar for Bundler users (but out of place in a Go environment if you ask me). One interesting feature of the Gomfile is that you can specify a command to get the code, if it's not `go-get`able (eg some random tarball on the internet somewhere). It seems this command is arbitrary, so you can more easily interface with packages that aren't in hosted version control.
+Made by @mattn, a prolific gopher as far as GitHub is concerned. It's styled after bundler in a lot of respects. The "Gomfile" has an odd, ruby-esque syntax, familiar for Bundler users (but out of place in a Go environment if you ask me). One interesting feature of the Gomfile is that you can specify a command to get the code, if it's not `go-get`able (eg some random tarball on the internet somewhere). It seems this command is arbitrary, so you can more easily interface with packages that aren't in hosted version control.
 
 Anyway once you have your gomfile, gom works mostly like bundler. Just remember that, in Go, we don't really have an analogous concept for `Gemfile.lock`. `Gemfile.lock` depends on the existence of a central repository, which really doesn't exist in Go. Plus, keeping the actual code of other people's repositories in your own project is a safety measure in case they take their stuff off GitHub in six months. You never know.
 
-- `gom install` to bring your Gomfile deps into an `_vendor` directory
+- `gom install` to bring your Gomfile deps into a local `_vendor` directory
 - `gom build`, `gom test` instead of `go build`, `go test`
 - `gom exec` looks like it splices the vendor directory into your GOPATH, for any other GOPATH-related commands you need
 
 Curiously, there is no `gom update` to serve as the parallel of `gom install`. I'm not sure such a command would be meaningful though, since we don't have a `Gomfile.lock`. (The point of `bundle install` is that it acknowledges an existing Gemfile.lock if there is one, where as `bundle update` will intentionally step around it and perform a conservative update.)
 
-## [gpm](https://github.com/pote/gpm)
+## [gpm](https://github.com/pote/gpm) and [gvp](https://github.com/pote/gvp)
+
+One of the players on the field written in pure shell script, as opposed to a Go binary. These two scripts work together, and they're very easy to understand.
+
+Basically `gpm install` reads a `Godeps` file (awkward name overlap with godep, but I guess it couldn't be avoided) and installs all those packages using `go get`, then it moves the versions to whatever commits you specified in Godeps. Note that, since it uses `go get`, it depends on whatever directory is first in your GOPATH, which is probably by design.
+
+gvp is designed to fill in the blanks by manipulating GOPATH to play with gpm. It uses a local `.godeps` directory for all the vendored packages, and it has two commands:
+
+- `gvp in` - put the `.godeps` at the front of your GOPATH (and other env vars)
+- `gvp out` take `.godeps` out of your env vars
+
+The idea is that you `gvp in` to put the local directory at the front, and then `gpm install` to get your `Godeps`-specified versions. Hack hack hack with all your normal commands (no need to prefix the `go` tool with any other tools), and then when you're done, `gvp out` before moving to another project.
+
+I really like how easy this solution is to understand, but I'm not sure I like the statefulness of modifying environment variables. Personally I prefer the `bundle exec` approach. I also wonder if there are more advanced scenarios that can't be expressed by `Godeps`, since it has a very simple format.
+
+Note that gpm doesn't have a sort of `update` command, but I'm not sure it needs one, since you can just move your `Godeps` entry forward, then `go install -u` a package again and check it out to your newly preferred version. (I think that's basically what gpm does.)
 
 ## [gopm](https://github.com/gpmgo/gopm)
 
