@@ -16,7 +16,19 @@ godep's preferred specification format is JSON. It dumps all your vendored packa
 - `godep update` to move vendored versions forward to the current global versions. Sorta the opposite of restore.
 - `godep get` is recursive godep-aware `go get`. It installs packages globally, but it'll invoke godep for any of those packages that use godep.
 
+One pecularity of godep that I can think of, looking at this documentation, is that you write your project without using it, and then `save` the deps partway in. The advantage of this approach, I guess, is that it makes it easier to drop godep into an existing project. In the transition period we're in right now (moving from vendoring by hand to an ecosystem of tools), that could be a big benefit. But I personally prefer to declare the exact dependencies myself if possible, and let the tool bring my worldview into reality. It appears that workflow would be possible with godep as well, but I haven't tried.
+
 ## [gom](https://github.com/mattn/gom)
+
+Made by mattn, a prolific gopher as far as GitHub is concerned. It's styled after bundler in a lot of respects. The "Gomfile" has an odd, ruby-esque syntax, familiar for Bundler users (but out of place in a Go environment if you ask me). One interesting feature of the Gomfile is that you can specify a command to get the code, if it's not `go-get`able (eg some random tarball on the internet somewhere). It seems this command is arbitrary, so you can more easily interface with packages that aren't in hosted version control.
+
+Anyway once you have your gomfile, gom works mostly like bundler. Just remember that, in Go, we don't really have an analogous concept for `Gemfile.lock`. `Gemfile.lock` depends on the existence of a central repository, which really doesn't exist in Go. Plus, keeping the actual code of other people's repositories in your own project is a safety measure in case they take their stuff off GitHub in six months. You never know.
+
+- `gom install` to bring your Gomfile deps into an `_vendor` directory
+- `gom build`, `gom test` instead of `go build`, `go test`
+- `gom exec` looks like it splices the vendor directory into your GOPATH, for any other GOPATH-related commands you need
+
+Curiously, there is no `gom update` to serve as the parallel of `gom install`. I'm not sure such a command would be meaningful though, since we don't have a `Gomfile.lock`. (The point of `bundle install` is that it acknowledges an existing Gemfile.lock if there is one, where as `bundle update` will intentionally step around it and perform a conservative update.)
 
 ## [gpm](https://github.com/pote/gpm)
 
