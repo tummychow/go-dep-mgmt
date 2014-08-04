@@ -49,6 +49,16 @@ Note that gpm doesn't have a sort of `update` command, but I'm not sure it needs
 
 ## [gopm](https://github.com/gpmgo/gopm)
 
+I believe this package manager was created by the team of Chinese gophers behind [gogs](https://github.com/gogits/gogs). Therefore, it's no surprise that gopm is used in gogs. Name is pretty close to gpm, but I won't complain because I suck at making creative names too.
+
+Docs for this project are [pretty good](https://github.com/gpmgo/docs/blob/master/en-US/Overview.md) compared to the competition, so big thumbs up for that. The gopmfile uses an INI-like format which appears often among this group of gophers. The basic workflow seems to be like this:
+
+- specify deps in `.gopmfile` or generate for an existing project with `gopm gen`
+- `gopm get` is like `go get`, but uses a local directory `.gopm/repos`
+- use `gopm build`, `gopm run`, `gopm install` instead of `go` tool commands (hmm, where's `gopm test`?). These commands add `.gopm/repos` to the front of your GOPATH.
+
+Not much more to say - the actual functionality is similar to gom although the commands have slightly different names and what not. (Note to self: gopm prepends its vendor directory to the GOPATH. Does gom prepend the directory or replace it altogether?)
+
 ## [goat](https://github.com/mediocregopher/goat)
 
 ## [goop](https://github.com/nitrous-io/goop)
