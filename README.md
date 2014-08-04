@@ -65,6 +65,22 @@ Not much more to say - the actual functionality is similar to gom although the c
 
 ## [gopkg.in](https://github.com/niemeyer/gopkg)
 
+gopkg.in is a [version-aware proxy](http://labix.org/gopkg.in) for `go get`. It doesn't require you to add any tooling to your project or manipulate your GOPATH. Instead, you change your imports to point to gopkg.in URLs.
+
+Each gopkg.in URL specifies not only the package you want (specified by its GitHub user and name), but also the major version (it uses semantic versioning, so the expectation is that minor/patch version bumps don't break compatibility). gopkg.in catches requests for git commands and redirects them to the newest tag or branch in that GitHub repository that matches the major version you asked for. There are some disadvantages to this approach:
+
+- you have to change your imports. I think there are some people who are really against this. I personally don't think it's evil, although maybe a bit inconvenient.
+- only works with GitHub as far as I can tell
+- members of your team could potentially be building with different versions of the same package. They'd all be the same major version, but you could have different minor/patch versions floating around your team.
+
+But there are also advantages:
+
+- you can only specify the major version, so there's pressure on upstream maintainers to be disciplined about backwards compatibility. That doesn't do you much good if the upstream maintainers are uncommunicative, but in that case you have other problems anyway.
+- no extra tooling required. If you use gopkg.in, `go get`, and the entire go tool, become version-aware for free, without adding any extra stuff to your workflow.
+- no GOPATH manipulation. Always use your global GOPATH without worrying about major versions clobbering one another. They're stored on separate gopkg.in URLs, so your imports will specify the right one.
+
+I'd say specifying only the major version is a double-edged sword (especially if your project's dependency graph is big, or contains highly version-sensitive packages), but if you don't want to introduce more complex tools to your project, gopkg.in is a great place to start.
+
 ## Roll your own
 
 Ah the classic solution of rolling your own vendoring. A pretty viable one right now considering how young the community is. It's not that hard to make your own vendoring script, and at least that way you know exactly how it works. Despite that, I wish more big projects would evaluate the options that exist. Even if they dismiss all of them as unsatisfactory, that still tells us something useful as a community - that all our current options have some work to do. I say "big projects" because they often have the most community attention, and need dependency management more than anybody else.
