@@ -14,7 +14,7 @@ godep's preferred specification format is JSON. It dumps all your vendored packa
 - prefix `go` commands with `godep` to add your vendored packages to the front of the `GOPATH` for build/install/test
 - `godep restore` to check out global packages to your currently vendored versions. Good for putting your global `GOPATH` in a consistent state vs your current project.
 - `godep update` to move vendored versions forward to the current global versions. Sorta the opposite of restore.
-- `godep get` is recursive godep-aware `go get`. It installs packages globally, but it'll invoke godep for any of those packages that use godep.
+- `godep get` is recursive godep-aware `go get`. It installs packages globally, but it'll invoke godep for any of those packages that use godep. I think this command is really important. If godep becomes the dominant tool, it needs to be able to handle recursive applications of itself for sub-dependencies. I'm not sure any other tools are thinking this far ahead yet.
 
 One pecularity of godep that I can think of, looking at this documentation, is that you write your project without using it, and then `save` the deps partway in. The advantage of this approach, I guess, is that it makes it easier to drop godep into an existing project. In the transition period we're in right now (moving from vendoring by hand to an ecosystem of tools), that could be a big benefit. But I personally prefer to declare the exact dependencies myself if possible, and let the tool bring my worldview into reality. It appears that workflow would be possible with godep as well, but I haven't tried.
 
