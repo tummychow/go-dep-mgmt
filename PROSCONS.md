@@ -118,6 +118,6 @@ High level pros and cons of each dependency tool I mentioned, ignoring matters o
 
 # What would you do, @tummychow?
 
-I'd gonna pretend dependency management isn't a problem `/buries head in the sand`
+I'd pretend dependency management isn't a problem `/buries head in the sand`
 
 Just kidding. If you want to know what I think, just wait for me to make a large Go project. I'll put my money where my mouth is by actually *using* the tool I like. What a novel concept. Anyway my opinion is irrelevant. Evaluate the choices for yourself and be an informed customer!
