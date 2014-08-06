@@ -61,7 +61,23 @@ Not much more to say - the actual functionality is similar to gom although the c
 
 ## [goat](https://github.com/mediocregopher/goat)
 
+goat is a dependency manager with a YAML-based specification (structurally similar to a gopmfile). It supports the same primitive operations as the other dependency managers. (I gotta tell you, writing this is getting pretty bland. They all start to look the same after a while.)
+
+- `goat deps` to vendor the dependencies under a local directory `.goat/deps`
+- `goat build`, `goat test`, `goat run`, etc to replace the `go` tool, but with `.goat/deps` at the front of the GOPATH
+- when you change your deps, just run `goat deps` again
+
+Is this document starting to feel a bit repetitive to you?
+
 ## [goop](https://github.com/nitrous-io/goop)
+
+goop is even more bundler-like than gom. The goopfile uses a simple left-to-right line-by-line syntax. The text to the right of a `!` specifies the clone URL (if different from the import URL) and a `#` specifies the commit to check out. But distinctively, goop also has a `Goopfile.lock` like bundler does. You're supposed to store that under VCS rather than your vendored dependencies.
+
+- `goop install` to get the vendored deps in `.vendor` and create `Goopfile.lock`. Presumably, the lock file stores the exact versions that were used for any dependencies you didn't specify, just like Bundler's `Gemfile.lock`. Subsequent calls to `goop install` will use the lock file if it exists.
+- `goop exec` will run commands with the vendor directory at the front of your GOPATH. Just like `bundle exec`, you can basically run anything you want.
+- `goop update` will reinstall vendored dependencies from scratch, ignoring `Goopfile.lock` just like bundler would
+
+Quite interesting how it strongly follows the bundler model. As a part-time rubyist, this really appeals to my sensibilities.
 
 ## [gopkg.in](https://github.com/niemeyer/gopkg)
 
