@@ -55,7 +55,7 @@ Docs for this project are [pretty good](https://github.com/gpmgo/docs/blob/maste
 
 - specify deps in `.gopmfile` or generate for an existing project with `gopm gen`
 - `gopm get` is like `go get`, but uses a local directory `.gopm/repos`
-- use `gopm build`, `gopm run`, `gopm install` instead of `go` tool commands (hmm, where's `gopm test`?). These commands add `.gopm/repos` to the front of your GOPATH.
+- use `gopm build`, `gopm run`, `gopm install` instead of `go` tool commands (there is a `gopm test` but I don't think it's documented). These commands add `.gopm/repos` to the front of your GOPATH.
 
 Not much more to say - the actual functionality is similar to gom although the commands have slightly different names and what not. Both gopm and gom prepend the vendored GOPATH to your global GOPATH; I wonder if it would make more sense to only use the vendored GOPATH (to catch any global deps you were pulling in but not vendoring).
 
