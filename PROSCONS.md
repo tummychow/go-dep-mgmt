@@ -14,7 +14,7 @@ High level pros and cons of each dependency tool I mentioned, ignoring matters o
 ###### Cons
 
 - non-declarative. You have to get your project into a good state and then `godep save`. To "get your project into a good state", you would have to manually check out each dependency to the desired version in your global GOPATH. It doesn't seem like godep provides a way to read a standalone `Godeps.json` and save exactly those versions to your local vendored directory.
-- `godep restore` vs `godep update` was a bit confusing. I had to read the source code for this. It could use some more docs (users of godep, give them a hand and submit a PR! I end up using godep, I'll do it myself.)
+- `godep restore` vs `godep update` was a bit confusing. I had to read the source code for this. It could use some more docs (users of godep, give them a hand and submit a PR! If I end up using godep, I'll do it myself.)
 - if you want something in your vendored directory, you have to either copy it from the global GOPATH, or put it there manually. godep doesn't do any of the cloning itself. Your dependencies will always enter your global GOPATH first before godep can save them. (Some might refer to this disparagingly as "pollution".)
 
 ## gom
@@ -80,7 +80,7 @@ High level pros and cons of each dependency tool I mentioned, ignoring matters o
 ###### Pros
 
 - extremely bundler-like. rubyists will probably feel most at-home using goop since it has a Goopfile.lock, unlike every other bundler-like competitor.
-- don't want to vendor the entire package in your project! Fine, just commit the Goopfile.lock instead like a rubyist would. goop will use the lock file if it exists, rather than recomputing your Goopfile.
+- don't want to vendor the entire package in your project? Fine, just commit the Goopfile.lock instead like a rubyist would. goop will use the lock file if it exists, rather than recomputing your Goopfile.
 
 ###### Cons
 
@@ -107,7 +107,7 @@ High level pros and cons of each dependency tool I mentioned, ignoring matters o
 
 ###### Pros
 
-- you can do anything you want, everything you want, and nothing but what you want. Create a solution that exactly fits your project's needs. The only limitation is your skill with bash and your imagination (or whatever language you write your vendoring scripts in)
+- you can do anything you want, everything you want, and nothing but what you want. Create a solution that exactly fits your project's needs. The only limitation is your skill with bash (or whatever language you write your vendoring scripts in) and your imagination
 - some VCSes provide useful features for vendoring (eg git subtrees) that are not leveraged by any existing tool (as of writing). If you want these cool toys you have to do it yourself.
 
 ###### Cons
