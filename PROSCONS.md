@@ -14,7 +14,6 @@ High level pros and cons of each dependency tool I mentioned, ignoring matters o
 ###### Cons
 
 - non-declarative. You have to get your project into a good state and then `godep save`. To "get your project into a good state", you would have to manually check out each dependency to the desired version in your global GOPATH. It doesn't seem like godep provides a way to read a standalone `Godeps.json` and save exactly those versions to your local vendored directory.
-- `godep restore` vs `godep update` was a bit confusing. I had to read the source code for this. It could use some more docs (users of godep, give them a hand and submit a PR! If I end up using godep, I'll do it myself.)
 - if you want something in your vendored directory, you have to either copy it from the global GOPATH, or put it there manually. godep doesn't do any of the cloning itself. Your dependencies will always enter your global GOPATH first before godep can save them. (Some might refer to this disparagingly as "pollution".)
 
 ## gom
