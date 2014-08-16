@@ -8,7 +8,7 @@ High level pros and cons of each dependency tool I mentioned, ignoring matters o
 
 - `godep save` makes it easy to drop godep into an existing project
 - popular. Like it or not, user count matters, because the ecosystem is young.
-- `godep get` provides recursive invocation of godep, which is important if godep "wins" the dependency manager "war" (war in quotes because we're all friends here, right?). So far I think it's the only one that has thought this far ahead. Other dependency managers - if you support this, you should document it! It's a key feature!
+- `godep get` provides recursive invocation of godep. Other dependency managers - if you support this, you should document it! It's a key feature!
 - godep never actually pulls packages from the internet, it just copies them from your global GOPATH. So it supports all the same VCSes as the go tool.
 
 ###### Cons
@@ -66,10 +66,11 @@ High level pros and cons of each dependency tool I mentioned, ignoring matters o
 
 - uses YAML. In my opinion, it's the perfect balance between being concise enough for human writing, and being powerful enough for nested data structures. Being standardized is also a big plus.
 - same bundler-like CLI as other tools. Make a .go.yaml, `goat deps` and hack away
+- also seems to support recursive dependency resolution (more details on this in future commits)
 
 ###### Cons
 
-- missing some important commands. For example, there's no `goat exec` to invoke arbitrary scripts with the GOPATH. A convenience command to generate .go.yaml for an existing project would also be nice to compete with other dep managers.
+- missing some important commands. For example, there's no `goat exec` to invoke arbitrary scripts with the GOPATH. A convenience command to generate .go.yaml for an existing project would also be nice to compete with other dep managers (there's a PR for `goat gen` but it's hanging right now).
 - crosstalk between `loc` and `path` keys in .go.yaml. If you specify the `type` of a dependency to be `git`, then the `loc` is `https://github.com/foo/bar.git` and the `path` is `github.com/foo/bar`. So you end up having to write the same thing twice. Some magic defaults for this would be pretty sweet to reduce the amount of typing.
 - format is missing some bells and whistles. But this is YAML, therefore very flexible. There's room to grow here if goat becomes popular.
 - no svn/bzr support
