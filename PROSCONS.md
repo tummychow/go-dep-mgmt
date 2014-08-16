@@ -74,6 +74,7 @@ High level pros and cons of each dependency tool I mentioned, ignoring matters o
 - crosstalk between `loc` and `path` keys in .go.yaml. If you specify the `type` of a dependency to be `git`, then the `loc` is `https://github.com/foo/bar.git` and the `path` is `github.com/foo/bar`. So you end up having to write the same thing twice. Some magic defaults for this would be pretty sweet to reduce the amount of typing.
 - format is missing some bells and whistles. But this is YAML, therefore very flexible. There's room to grow here if goat becomes popular.
 - no svn/bzr support
+- dependency on `git clone`/`hg clone` makes goat hard to use for projects with large dependency trees. If you want to fix the version of a dependency, you have to tell goat to acquire it via a VCS clone rather than `go get`. And if you do a VCS clone, goat can't tell what the dependencies of that project are, unless it has its own `.go.yaml`, which most projects don't. So you end up having to specify every dependency of your dependencies as well. I call this "the gemspec problem" - trying to implement bundler without the metadata that makes bundler a possibility. If every project adopted a `.go.yaml` at this very moment, I'd probably use goat, but without that it's not scalable.
 
 ## goop
 
