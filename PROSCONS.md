@@ -90,6 +90,7 @@ High level pros and cons of each dependency tool I mentioned, ignoring matters o
 - convenience command to generate Goopfile for an existing project would be nice to compete with other dep managers.
 - no svn/bzr support
 - `goop go test` is a bit more annoying than `goop test` (yes yes it's nitpicking)
+- if you depend on a subfolder of a larger repository, goop's dependency computation ends up running on the larger repository and bringing in all of its dependencies instead. See nitrous-io/goop#23.
 
 ## gopkg.in
 
